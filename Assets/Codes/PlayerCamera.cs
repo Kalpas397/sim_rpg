@@ -22,6 +22,7 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         pastPos = targetObject.transform.position;
+        rotateCamera();
     }
 
     void Update()
