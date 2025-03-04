@@ -14,6 +14,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float rotateSpeed = 1.0f;  // 回転スピード
     private Vector3 lastMousePosition;
     private Vector3 newCameraAngle = new Vector3(0, 0, 0);
+
+    float currentVerticalAngle = 0.0f;
     [SerializeField] private float minRotateAngleX = 0.0f;  // カメラのx軸回転の制限 最小値
     [SerializeField] private float maxRotateAngleX = 50.0f; // カメラのx軸回転の制限 最大値
 
@@ -54,13 +56,23 @@ public class PlayerCamera : MonoBehaviour
 
     private void rotateCamera()
     {
-        Vector3 angle = new Vector3(
-            Input.GetAxis("Mouse X") * this.rotateSpeed,
-            Input.GetAxis("Mouse Y") * this.rotateSpeed,
-            0
-            );
-        this.mainCamera.transform.RotateAround(this.targetObject.transform.position, Vector3.up, angle.x);
-        // Debug.Log(this.mainCamera.transform.RotateAround);
-        this.mainCamera.transform.RotateAround(this.targetObject.transform.position, transform.right, angle.y);
+        // スワイプ入力受け取り
+        float swipeInputX = Input.GetAxis("Mouse X") * this.rotateSpeed;
+        float swipeInputY = Input.GetAxis("Mouse Y") * this.rotateSpeed * -1.0f;
+        
+        // カメラの角度を変化
+        this.mainCamera.transform.RotateAround(this.targetObject.transform.position, Vector3.up, swipeInputX);
+
+        // 垂直回転の範囲を制限
+        float newVerticalAngle = currentVerticalAngle + swipeInputY;
+        newVerticalAngle = Mathf.Clamp(newVerticalAngle, minRotateAngleX, maxRotateAngleX);
+        float verticalRotation = newVerticalAngle - currentVerticalAngle;
+        currentVerticalAngle = newVerticalAngle;
+
+        // 縦の軸回転を適用
+        this.mainCamera.transform.RotateAround(this.targetObject.transform.position, transform.right, verticalRotation);
+
+        // ターゲットの方向を向かせる
+        this.mainCamera.transform.LookAt(this.targetObject.transform.position);
     }
 }
