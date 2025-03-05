@@ -19,29 +19,25 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float minRotateAngleX = 0.0f;  // カメラのx軸回転の制限 最小値
     [SerializeField] private float maxRotateAngleX = 50.0f; // カメラのx軸回転の制限 最大値
 
+    private bool isScreenTouched = false;   // 画面がタップされたか
+
     void Start()
     {
         pastPos = targetObject.transform.position;
-        rotateCamera();
+        RotateCamera();
     }
 
     void Update()
     {
-        movingCamera();
+        MovingCamera();
 
-        if (Input.GetMouseButtonDown(0))
+        if (isScreenTouched)
         {
-            newCameraAngle = mainCamera.transform.localEulerAngles;
-            lastMousePosition = Input.mousePosition;
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            rotateCamera();
+            RotateCamera();
         }
     }
 
-    private void movingCamera()
+    private void MovingCamera()
     {
         //------カメラの移動------
 
@@ -55,7 +51,14 @@ public class PlayerCamera : MonoBehaviour
         pastPos = currentPos;
     }
 
-    private void rotateCamera()
+    private void CameraClick()
+    {
+        newCameraAngle = mainCamera.transform.localEulerAngles;
+        lastMousePosition = Input.mousePosition;
+        // Debug.Log("click down");
+    }
+
+    private void RotateCamera()
     {
         // スワイプ入力受け取り
         float swipeInputX = Input.GetAxis("Mouse X") * this.rotateSpeed;
@@ -75,5 +78,17 @@ public class PlayerCamera : MonoBehaviour
 
         // ターゲットの方向を向かせる
         this.mainCamera.transform.LookAt(this.targetObject.transform.position);
+        // Debug.Log("aaa");
+    }
+
+    public void ClickDownScreen()
+    {
+        isScreenTouched = true;
+        CameraClick();
+    }
+
+    public void ClicUpScreen()
+    {
+        isScreenTouched = false;
     }
 }
