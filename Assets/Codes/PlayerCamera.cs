@@ -61,8 +61,8 @@ public class PlayerCamera : MonoBehaviour
     private void RotateCamera()
     {
         // スワイプ入力受け取り
-        float swipeInputX = Input.GetAxis("Mouse X") * this.rotateSpeed;
-        float swipeInputY = Input.GetAxis("Mouse Y") * this.rotateSpeed * -1.0f;
+        float swipeInputX = Input.GetAxis("Mouse X") * this.rotateSpeed * Statics.cameraRotateSpeed;
+        float swipeInputY = Input.GetAxis("Mouse Y") * this.rotateSpeed * Statics.cameraRotateSpeed * -1.0f;
         
         // カメラの角度を変化
         this.mainCamera.transform.RotateAround(this.targetObject.transform.position, Vector3.up, swipeInputX);
