@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 3.0f;
     private Rigidbody rb;
     private Vector2 move;
-
+    [SerializeField] private Animator anim;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,25 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < -10.0f)
         {
             transform.position = _initpos;
+        }
+
+        var velocity = rb.velocity;
+        velocity.y = 0.0f;
+
+        float animSpeed = velocity.magnitude;
+        animSpeed = Mathf.Pow(animSpeed, 0.25f);
+        Debug.Log("animSpeed: " + animSpeed);
+        if (anim)
+        {
+            anim.SetFloat("Speed", animSpeed);
+            // if (animSpeed > 0)
+            // {
+            //     anim.SetFloat("Speed", animSpeed);
+            // }
+            // else if (animSpeed < 0)
+            // {
+            //     anim.SetFloat("Speed", animSpeed);
+            // }
         }
     }
 
