@@ -10,13 +10,12 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private GameObject[] fruits;    // 拾ったフルーツを格納する配列
     [SerializeField] private int maxFruitCount = 100;
     [SerializeField] private int fruitCount = 0;
-    [SerializeField] private bool isDamaged = false; // ダメージフラグ ダメージオブジェクトに触れているか
-    // [SerializeField] private bool isInvincible = false; // 無敵フラグ
+    [SerializeField] private bool isDamaged = false; // ダメージオブジェクトに触れているかのフラグ
     private Collider _collision;    // TriggerEnterで取得したコライダーを格納
 
 
     
-    public bool IsDamaged { get => isDamaged; set => isDamaged = value; }
+    // public bool IsDamaged { get => isDamaged; set => isDamaged = value; }
     // public bool IsInvincible { get => isInvincible; set => isInvincible = value; }
 
     // Start is called before the first frame update
@@ -32,6 +31,7 @@ public class PlayerCollision : MonoBehaviour
         {
             if (isDamaged)
             {
+                DestroyFruits();    // フルーツ削除
                 StartCoroutine(playerController.DamagedPlayer(_collision));
             }
         }
@@ -42,7 +42,8 @@ public class PlayerCollision : MonoBehaviour
         // フルーツに触れた処理
         if (collision.gameObject.CompareTag("Fruit"))
         {
-            if (fruitCount < maxFruitCount)
+            // 操作不可状態のときは拾えない　最大所持数以上は拾えない
+            if (!playerController.IsNotControl && fruitCount < maxFruitCount)
             {
                 StackFruits(collision.gameObject);
                 fruitCount++;
@@ -53,7 +54,7 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Goal"))
         {
             // スコア加算
-            DestroyFruits();
+            DestroyFruits();    // フルーツ削除
         }
 
         // ダメージオブジェクト
@@ -61,12 +62,17 @@ public class PlayerCollision : MonoBehaviour
         {
             _collision = collision;
             isDamaged = true;
-
-            // フルーツ削除
-            DestroyFruits();
-            
         }
             
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        // ダメージオブジェクト
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            isDamaged = true;
+        }
     }
 
     private void OnTriggerExit(Collider collision)

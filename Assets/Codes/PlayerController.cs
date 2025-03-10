@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isNotControl = false; // 操作不可フラグ
 
     public bool IsInvincible { get => isInvincible; set => isInvincible = value; }
+    public bool IsNotControl { get => isNotControl; set => isNotControl = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -94,8 +95,15 @@ public class PlayerController : MonoBehaviour
     // プレイヤーの被弾時の挙動
     public IEnumerator DamagedPlayer(Collider collision)
     {
+        if (anim)
+        {
+            anim.SetBool("isDamaged", true);
+        }
 
         // 対象オブジェクトへ向く
+        var velocity = rb.velocity;
+        rb.velocity = new Vector3(0, 0, 0);
+
         Vector3 direction = collision.transform.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction);
         transform.rotation = rotation;
@@ -108,6 +116,7 @@ public class PlayerController : MonoBehaviour
         if (rb != null)
         {
             // あとで被ダメ直前の移動を0にする
+            
             Vector3 backwardDirection = -transform.forward;
             Vector3 forceDirection = backwardDirection * 5f + Vector3.up * 5f;
             rb.AddForce(forceDirection, ForceMode.Impulse);
@@ -115,7 +124,13 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("Damaged!");
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
+        if (anim)
+        {
+            anim.SetBool("isDamaged", false);
+        }
+
+        yield return new WaitForSeconds(1);
         isNotControl = false;   // 操作不可状態を解除
 
         yield return new WaitForSeconds(3);
