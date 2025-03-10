@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fruit
   - Goal
+  - Damage
   layers:
   - Default
   - TransparentFX

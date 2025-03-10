@@ -5,13 +5,18 @@ using UnityEngine.InputSystem;  // InputSystemに必要
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private PlayerCollision playerCollision;
     @Level2 _inputActions;
     Vector3 _initpos;   // 初期位置
     [SerializeField] private float moveSpeed = 3.0f;
     private Rigidbody rb;
     private Vector2 move;
     [SerializeField] private Animator anim;
- 
+    [SerializeField] private bool isInvincible = false; // 無敵フラグ
+    [SerializeField] private bool isNotControl = false; // 操作不可フラグ
+
+    public bool IsInvincible { get => isInvincible; set => isInvincible = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +42,8 @@ public class PlayerController : MonoBehaviour
         float animSpeed = velocity.magnitude;
         animSpeed = Mathf.Pow(animSpeed, 0.25f);
         // Debug.Log("animSpeed: " + animSpeed);
+
+        // アニメーション
         if (anim)
         {
             anim.SetFloat("Speed", animSpeed);
@@ -53,6 +60,22 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // 被ダメージ時は移動不可
+        if (!isNotControl)
+        {
+            RunningPlayer();
+        }
+        
+    }
+
+    void Awake()
+    {
+        _inputActions = new @Level2();
+        _inputActions.Enable();
+    }
+
+    private void RunningPlayer()
+    {
         // カメラの方向から、X-Z平面の単位ベクトルを取得
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
     
@@ -68,9 +91,36 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Awake()
+    // プレイヤーの被弾時の挙動
+    public IEnumerator DamagedPlayer(Collider collision)
     {
-        _inputActions = new @Level2();
-        _inputActions.Enable();
+
+        // 対象オブジェクトへ向く
+        Vector3 direction = collision.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = rotation;
+        // あとでx,y軸は回転しないようにする
+        
+        isNotControl = true;    // 操作不可状態にする
+        isInvincible = true;    // 無敵にする
+
+        // 後方へ飛ばす
+        if (rb != null)
+        {
+            // あとで被ダメ直前の移動を0にする
+            Vector3 backwardDirection = -transform.forward;
+            Vector3 forceDirection = backwardDirection * 5f + Vector3.up * 5f;
+            rb.AddForce(forceDirection, ForceMode.Impulse);
+        }
+
+        Debug.Log("Damaged!");
+
+        yield return new WaitForSeconds(2);
+        isNotControl = false;   // 操作不可状態を解除
+
+        yield return new WaitForSeconds(3);
+        isInvincible = false;   // 無敵状態を解除
     }
+
+    
 }
