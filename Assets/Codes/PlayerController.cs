@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
         float animSpeed = velocity.magnitude;
         animSpeed = Mathf.Pow(animSpeed, 0.25f);
-        Debug.Log("animSpeed: " + animSpeed);
+        // Debug.Log("animSpeed: " + animSpeed);
         if (anim)
         {
             anim.SetFloat("Speed", animSpeed);
