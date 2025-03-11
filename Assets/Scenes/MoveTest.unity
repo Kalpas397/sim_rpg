@@ -1799,6 +1799,11 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1017208343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7447163605589988728, guid: 907fd825e3988774caab4234b943bf44, type: 3}
+  m_PrefabInstance: {fileID: 2087518542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1054691731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,6 +3682,23 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 7447163605599512414, guid: 907fd825e3988774caab4234b943bf44, type: 3}
   m_PrefabInstance: {fileID: 2087518542}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2132636695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017208343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777e05c072fc63b4ea1b2d0690c7fd82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1625490124}
+  objectRenderer: []
+  material: []
+  frequency: 15
+  amplitude: 1
 --- !u!1 &2140944166
 GameObject:
   m_ObjectHideFlags: 0
