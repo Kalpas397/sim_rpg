@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         // 最低速度は最大速度の半分まで
         float speedFactor = 1f - (playerCollision.FruitCount / (float)playerCollision.MaxFruitCount) / 2f;
         float currentSpeed = moveSpeed * Mathf.Max(minSpeed / moveSpeed, speedFactor);
-        Debug.Log("currentSpeed: "+ currentSpeed);
+        // Debug.Log("currentSpeed: "+ currentSpeed);
         return currentSpeed;
     }
 
