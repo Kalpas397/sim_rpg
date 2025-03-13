@@ -17,11 +17,15 @@ public class Timer : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI textTime;
 
+    public bool IsStopTimer { get => _isStopTimer; set => _isStopTimer = value; }
+    public float NowTime { get => _nowTime; set => _nowTime = value; }
+
     // Start is called before the first frame update
     void Start()
     {
         _nowTime = _limitTime;
-        textTime.text = _nowTime.ToString("F0");    // 現在のタイムを整数で表示
+        textTime.text = Mathf.Ceil(_nowTime).ToString();
+        // textTime.text = _nowTime.ToString("F0");    // 現在のタイムを整数で表示
     }
 
     // Update is called once per frame
@@ -38,7 +42,8 @@ public class Timer : MonoBehaviour
             if (_nowTime > 0)
             {
                 _nowTime -= Time.deltaTime;
-                textTime.text = _nowTime.ToString("F0");    // 現在のタイムを整数で表示
+                textTime.text = Mathf.Ceil(_nowTime).ToString();    // 現在のタイムを整数で表示
+                // textTime.text = _nowTime.ToString("F0");    // 現在のタイムを整数で表示
             }
             else
             {

@@ -20,8 +20,12 @@ public class GuideText : MonoBehaviour
         // StartCoroutine(AppearTextPropertiesOverTime("aaa", 1f, false));
     }
 
-    // テキストの出現
-    // str: 表示テキスト, displayDuration: 表示時間, isInstruction: 強調表示するか
+    /// <summary>
+    /// テキストの出現
+    /// </summary>
+    /// <param name="str">表示テキスト</param>
+    /// <param name="displayDuration">表示時間</param>
+    /// <param name="isInstruction">強調表示するか</param>
     public IEnumerator AppearTextPropertiesOverTime(string str, float displayDuration, bool isInstruction)
     {
         uiText.text = str;

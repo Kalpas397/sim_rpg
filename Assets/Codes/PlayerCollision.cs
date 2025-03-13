@@ -20,7 +20,6 @@ public class PlayerCollision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // fruits = new GameObject[100];
         Array.Resize(ref fruits, maxFruitCount);    // 配列の要素数を最大個数に変更
     }
 
