@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-public class TextGuide : MonoBehaviour
+public class GuideText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI uiText; // 対象のTextMeshProオブジェクト
     [SerializeField] private float duration = 2.0f; // 遷移にかかる時間（秒）
@@ -16,13 +16,16 @@ public class TextGuide : MonoBehaviour
     {
         initialScale = uiText.transform.localScale;
         initialColor = uiText.color;
-        StartCoroutine(AppearTextPropertiesOverTime());
+        uiText.color = targetColor;
+        // StartCoroutine(AppearTextPropertiesOverTime("aaa", 1f, false));
     }
 
     // テキストの出現
-    // あとで引数で消失までの時間を決められるようにする
-    IEnumerator AppearTextPropertiesOverTime()
+    // str: 表示テキスト, displayDuration: 表示時間, isInstruction: 強調表示するか
+    public IEnumerator AppearTextPropertiesOverTime(string str, float displayDuration, bool isInstruction)
     {
+        uiText.text = str;
+
         float time = 0;
 
         while (time < duration)
@@ -45,13 +48,13 @@ public class TextGuide : MonoBehaviour
         uiText.transform.localScale = targetScale;
         uiText.color = initialColor;
 
-        yield return new WaitForSeconds(3f);
-        StartCoroutine(DisappearTextPropertiesOverTime());
+        yield return new WaitForSeconds(displayDuration);
+        StartCoroutine(DisappearTextPropertiesOverTime(isInstruction));
     }
 
     // テキストの消失
-    // あとで小さくなって消えるかを引数で選択できるようにする
-    IEnumerator DisappearTextPropertiesOverTime()
+    // 強調表示の場合テキストは小さくなり消失する
+    public IEnumerator DisappearTextPropertiesOverTime(bool isInstruction)
     {
         float time = 0;
 
@@ -60,8 +63,11 @@ public class TextGuide : MonoBehaviour
             // 経過時間に基づいて補間値を計算
             float t = time / duration;
 
-            // スケールを補間
-            // uiText.transform.localScale = Vector3.Lerp(initialScale, new Vector3(0, 0, 0), t);
+            if (isInstruction)
+            {
+                // スケールを補間
+                uiText.transform.localScale = Vector3.Lerp(initialScale, new Vector3(0, 0, 0), t);
+            }
 
             // 色（透明度）を補間
             uiText.color = Color.Lerp(initialColor, targetColor, t);
@@ -71,8 +77,12 @@ public class TextGuide : MonoBehaviour
             yield return null;
         }
 
-        // 最終的なスケールと色を設定
-        // uiText.transform.localScale = targetScale;
+        if (isInstruction)
+        {
+            // 最終的なスケールと色を設定
+            uiText.transform.localScale = targetScale;
+        }
+            
         uiText.color = targetColor;
     }
 
