@@ -1,3 +1,4 @@
+using System;   // Array.Resizeを使用
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,15 +14,14 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private bool isDamaged = false; // ダメージオブジェクトに触れているかのフラグ
     private Collider _collision;    // TriggerEnterで取得したコライダーを格納
 
-
-    
-    // public bool IsDamaged { get => isDamaged; set => isDamaged = value; }
-    // public bool IsInvincible { get => isInvincible; set => isInvincible = value; }
+    public int MaxFruitCount { get => maxFruitCount; set => maxFruitCount = value; }
+    public int FruitCount { get => fruitCount; set => fruitCount = value; }
 
     // Start is called before the first frame update
     void Start()
     {
-        fruits = new GameObject[100];
+        // fruits = new GameObject[100];
+        Array.Resize(ref fruits, maxFruitCount);    // 配列の要素数を最大個数に変更
     }
 
     // Update is called once per frame

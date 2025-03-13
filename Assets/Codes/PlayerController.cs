@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     @Level2 _inputActions;
     Vector3 _initpos;   // 初期位置
     [SerializeField] private float moveSpeed = 3.0f;
+    [SerializeField] private float minSpeed = 3.0f;
     private Rigidbody rb;
     private Vector2 move;
     [SerializeField] private Animator anim;
@@ -84,12 +85,24 @@ public class PlayerController : MonoBehaviour
         Vector3 moveForward = cameraForward * move.y + Camera.main.transform.right * move.x;
     
         // 移動方向にスピードを掛ける。ジャンプや落下がある場合は、別途Y軸方向の速度ベクトルを足す。
-        rb.velocity = moveForward * moveSpeed + new Vector3(0, rb.velocity.y, 0);
+        // rb.velocity = moveForward * moveSpeed + new Vector3(0, rb.velocity.y, 0);
+        rb.velocity = moveForward * CalcCurrentSpeed() + new Vector3(0, rb.velocity.y, 0);
     
         // キャラクターの向きを進行方向に
-        if (moveForward != Vector3.zero) {
+        if (moveForward != Vector3.zero)
+        {
             transform.rotation = Quaternion.LookRotation(moveForward);
         }
+    }
+
+    // 所持数による移動速度の計算
+    private float CalcCurrentSpeed()
+    {
+        // 最低速度は最大速度の半分まで
+        float speedFactor = 1f - (playerCollision.FruitCount / (float)playerCollision.MaxFruitCount) / 2f;
+        float currentSpeed = moveSpeed * Mathf.Max(minSpeed / moveSpeed, speedFactor);
+        Debug.Log("currentSpeed: "+ currentSpeed);
+        return currentSpeed;
     }
 
     // プレイヤーの被弾時の挙動
@@ -115,8 +128,6 @@ public class PlayerController : MonoBehaviour
         // 後方へ飛ばす
         if (rb != null)
         {
-            // あとで被ダメ直前の移動を0にする
-            
             Vector3 backwardDirection = -transform.forward;
             Vector3 forceDirection = backwardDirection * 5f + Vector3.up * 5f;
             rb.AddForce(forceDirection, ForceMode.Impulse);
