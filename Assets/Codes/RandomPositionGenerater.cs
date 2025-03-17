@@ -14,45 +14,39 @@ public class RandomPositionGenerater : MonoBehaviour
     [SerializeField] private float _maxDistance = 10f;  // 最大距離
     private RaycastHit _hit;
 
+    void Start()
+    {
+        StartCoroutine(GroundCheck());
+    }
+
     private void Update()
     {
         // PerformSphereCast();
     }
-    /*
 
-    private IEnumerator CheckGroundLoop()
+    IEnumerator GroundCheck()
     {
         while (true)
         {
-            Vector3 randomPosition;
-            RaycastHit hit;
+            // ランダムな位置を生成（XZ平面）
+            this.transform.position = new Vector3(
+                Random.Range(rangeA.position.x, rangeB.position.x),
+                transform.position.y,
+                Random.Range(rangeA.position.z, rangeB.position.z)
+            );
+            Debug.Log("pos: " + this.transform.position);
 
-            // Groundが見つかるまで位置を再試行
-            do
-            {
-                // ランダムな位置を生成（XZ平面）
-                randomPosition = new Vector3(
-                    Random.Range(rangeA, rangeB),
-                    transform.position.y,
-                    Random.Range(rangeA, rangeB)
-                );
+            Debug.Log("isGround" + PerformSphereCast());
 
-                // ランダムな位置から下方向にレイキャスト
-            } while (!Physics.Raycast(randomPosition, Vector3.down, out hit) ||
-                     LayerMask.LayerToName(hit.collider.gameObject.layer) != Ground);
-
-            // Groundが見つかったら「ok」を出力
-            Debug.Log("ok");
-
-            // 3秒間待機
-            yield return new WaitForSeconds(checkInterval);
+            yield return new WaitForSeconds (checkInterval);
         }
+        
     }
 
     /// <summary>
     /// 球状のレイを下方向へ飛ばし直近のオブジェクトを調べる
     /// </summary>
-    void PerformSphereCast()
+    bool PerformSphereCast()
     {
         // レイの起点と方向
         Vector3 origin = transform.position;
@@ -64,11 +58,17 @@ public class RandomPositionGenerater : MonoBehaviour
         if (isHit)
         {
             Debug.Log($"Hit object: {_hit.collider.gameObject.name}, Layer: {LayerMask.LayerToName(_hit.collider.gameObject.layer)}");
+            if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                return true;
+            }
         }
         else
         {
             Debug.Log("No object _hit.");
         }
+        
+        return false;
     }
 
     private void OnDrawGizmos()
@@ -82,5 +82,4 @@ public class RandomPositionGenerater : MonoBehaviour
         Gizmos.DrawLine(origin, endPoint); // 線を描画
         Gizmos.DrawWireSphere(endPoint, _sphereRadius); // 球を描画
     }
-    */
 }

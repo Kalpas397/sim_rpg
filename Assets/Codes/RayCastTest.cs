@@ -23,11 +23,11 @@ public class RayCastTest : MonoBehaviour
 
         if (isHit)
         {
-            Debug.Log($"Hit object: {hit.collider.gameObject.name}, Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+            // Debug.Log($"Hit object: {hit.collider.gameObject.name}, Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
         }
         else
         {
-            Debug.Log("No object hit.");
+            // Debug.Log("No object hit.");
         }
     }
 
