@@ -9,6 +9,9 @@ public class RandomPositionGenerater : MonoBehaviour
     [SerializeField] private Transform rangeB;
     [SerializeField] private float checkInterval = 3f;  // Groundにヒットした後の待機時間(秒)
 
+    [Header("RandomPosition Settings")]
+    [SerializeField] private GameObject _objFruit;
+
     [Header("SphereCast Settings")]
     [SerializeField] private float _sphereRadius = 0.5f; // 球の半径
     [SerializeField] private float _maxDistance = 10f;  // 最大距離
@@ -37,6 +40,21 @@ public class RandomPositionGenerater : MonoBehaviour
             Debug.Log("pos: " + this.transform.position);
 
             Debug.Log("isGround" + PerformSphereCast());
+
+            if (PerformSphereCast())
+            {
+                // オブジェクト生成
+                if (_objFruit)
+                {
+                    Instantiate(_objFruit, new Vector3(
+                        this.transform.position.x,
+                        1f,
+                        this.transform.position.z),
+                        Quaternion.identity
+                    );
+                }
+                
+            }
 
             yield return new WaitForSeconds (checkInterval);
         }
