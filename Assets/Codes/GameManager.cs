@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartCoroutine(guideText.AppearTextPropertiesOverTime("1", 0.5f, false));
         yield return new WaitForSeconds(1f);
-        StartCoroutine(guideText.AppearTextPropertiesOverTime("フルーツをゴールへ届けよう", 3f, true));
+        StartCoroutine(guideText.AppearTextPropertiesOverTime("爆弾をゴールへ運ぼう", 3f, true));
 
         timer.IsStopTimer = false;
     }
