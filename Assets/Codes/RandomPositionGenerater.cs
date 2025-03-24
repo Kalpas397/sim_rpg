@@ -37,9 +37,9 @@ public class RandomPositionGenerater : MonoBehaviour
                 transform.position.y,
                 Random.Range(rangeA.position.z, rangeB.position.z)
             );
-            Debug.Log("pos: " + this.transform.position);
+            // Debug.Log("pos: " + this.transform.position);
 
-            Debug.Log("isGround" + PerformSphereCast());
+            // Debug.Log("isGround" + PerformSphereCast());
 
             if (PerformSphereCast())
             {
@@ -75,7 +75,7 @@ public class RandomPositionGenerater : MonoBehaviour
 
         if (isHit)
         {
-            Debug.Log($"Hit object: {_hit.collider.gameObject.name}, Layer: {LayerMask.LayerToName(_hit.collider.gameObject.layer)}");
+            // Debug.Log($"Hit object: {_hit.collider.gameObject.name}, Layer: {LayerMask.LayerToName(_hit.collider.gameObject.layer)}");
             if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 return true;
@@ -83,7 +83,7 @@ public class RandomPositionGenerater : MonoBehaviour
         }
         else
         {
-            Debug.Log("No object _hit.");
+            // Debug.Log("No object _hit.");
         }
         
         return false;
