@@ -16,6 +16,8 @@ public class DrawLine : MonoBehaviour
 
     float currentTime = 0f;
 
+    private bool isGenerated = false;   // 円が完成したか
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,20 +45,24 @@ public class DrawLine : MonoBehaviour
         //     line.SetPosition(count - 1, transform.position);
         // }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (!isGenerated)
         {
-            currentTime += Time.deltaTime;
-            if (currentTime > 0.25f)
+            if (Input.GetKey(KeyCode.Space))
             {
-                count += 1;
-                line.positionCount = count;
-                line.SetPosition(count - 1, transform.position);
-                currentTime = 0f;
+                currentTime += Time.deltaTime;
+                if (currentTime > 0.25f)
+                {
+                    count += 1;
+                    line.positionCount = count;
+                    line.SetPosition(count - 1, transform.position);
+                    currentTime = 0f;
+                }
             }
-        }
 
-        // if (Input.GetKeyDown(KeyCode.C)) 
-        DetectLineTouch();
+            // if (Input.GetKeyDown(KeyCode.C)) 
+            DetectLineTouch();
+        }
+        
     }
 
     public void AddNewVertex(Vector3 newVertexPosition)
@@ -95,9 +101,34 @@ public class DrawLine : MonoBehaviour
 
         if (closestVertexIndex != -1)
         {
+            
             Debug.Log($"触れた頂点: {closestVertexIndex}, 座標: {lineRenderer.GetPosition(closestVertexIndex)}");
+            // 触れた頂点から最新の頂点までの座標を取得
+            if (closestVertexIndex < lineRenderer.positionCount-3)
+            {
+                List<Vector3> vertexPositions = GetVertexPositionsFromIndex(closestVertexIndex);
+                Debug.Log($"触れた頂点から最新の座標リスト: {string.Join(", ", vertexPositions)}");
+                isGenerated = true;
+            }
+            
         }
     }
+
+    List<Vector3> GetVertexPositionsFromIndex(int startIndex)
+    {
+        List<Vector3> positions = new List<Vector3>();
+
+        for (int i = startIndex; i < lineRenderer.positionCount; i++)
+        {
+            positions.Add(lineRenderer.GetPosition(i));
+        }
+
+        return positions;
+    }
+
+    
+
+    
 
 
 
