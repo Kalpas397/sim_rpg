@@ -39,7 +39,7 @@ public class Timer : MonoBehaviour
     {
         if (!_isStopTimer)
         {
-            if (_nowTime > 0)
+            if (_nowTime > 0.0f)
             {
                 _nowTime -= Time.deltaTime;
                 textTime.text = Mathf.Ceil(_nowTime).ToString();    // 現在のタイムを整数で表示

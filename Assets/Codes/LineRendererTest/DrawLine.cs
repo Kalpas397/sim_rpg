@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DrawLine : MonoBehaviour
 {
-
     LineRenderer line;
     [SerializeField] int count;  // 線の超点の数
 
@@ -28,23 +27,6 @@ public class DrawLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // スペースキーが押されたらリセット
-        // if (Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     // LineRendererの頂点を初期化
-        //     lineRenderer.positionCount = 0;
-        //     Debug.Log("LineRendererが初期化されました！");
-
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     // Debug.Log("aaa");
-        //     count += 1;
-        //     line.positionCount = count;
-        //     line.SetPosition(count - 1, transform.position);
-        // }
-
         if (!isGenerated)
         {
             if (Input.GetKey(KeyCode.Space))
@@ -65,21 +47,21 @@ public class DrawLine : MonoBehaviour
         
     }
 
-    public void AddNewVertex(Vector3 newVertexPosition)
-    {
-        // 新しい頂点をLineRendererに追加
-        int currentVertexCount = lineRenderer.positionCount;
-        lineRenderer.positionCount = currentVertexCount + 1;
-        lineRenderer.SetPosition(currentVertexCount, newVertexPosition);
+    // public void AddNewVertex(Vector3 newVertexPosition)
+    // {
+    //     // 新しい頂点をLineRendererに追加
+    //     int currentVertexCount = lineRenderer.positionCount;
+    //     lineRenderer.positionCount = currentVertexCount + 1;
+    //     lineRenderer.SetPosition(currentVertexCount, newVertexPosition);
 
-        // 直近の頂点インデックスを更新
-        lastGeneratedVertexIndex = currentVertexCount;
-    }
+    //     // 直近の頂点インデックスを更新
+    //     lastGeneratedVertexIndex = currentVertexCount;
+    // }
 
     void DetectLineTouch()
     {
-        int closestVertexIndex = -1;
-        float closestDistance = float.MaxValue;
+        int closestVertexIndex = -1;    // 最も近い頂点インデックス
+        float closestDistance = float.MaxValue; // 最短距離
 
         for (int i = 0; i < lineRenderer.positionCount; i++)
         {
@@ -104,7 +86,7 @@ public class DrawLine : MonoBehaviour
             
             Debug.Log($"触れた頂点: {closestVertexIndex}, 座標: {lineRenderer.GetPosition(closestVertexIndex)}");
             // 触れた頂点から最新の頂点までの座標を取得
-            if (closestVertexIndex < lineRenderer.positionCount-3)
+            if (closestVertexIndex < lineRenderer.positionCount - 3)
             {
                 List<Vector3> vertexPositions = GetVertexPositionsFromIndex(closestVertexIndex);
                 Debug.Log($"触れた頂点から最新の座標リスト: {string.Join(", ", vertexPositions)}");

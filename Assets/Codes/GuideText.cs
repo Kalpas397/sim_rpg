@@ -30,7 +30,7 @@ public class GuideText : MonoBehaviour
     {
         uiText.text = str;
 
-        float time = 0;
+        float time = 0.0f;
 
         while (time < duration)
         {
@@ -60,7 +60,7 @@ public class GuideText : MonoBehaviour
     // 強調表示の場合テキストは小さくなり消失する
     public IEnumerator DisappearTextPropertiesOverTime(bool isInstruction)
     {
-        float time = 0;
+        float time = 0.0f;
 
         while (time < duration)
         {
