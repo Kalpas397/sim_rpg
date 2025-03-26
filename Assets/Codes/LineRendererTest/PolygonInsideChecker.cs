@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PolygonInsideChecker : MonoBehaviour
 {
-    public Vector3[] polygonVertices;   // 凹多角形の頂点リスト
+    public Vector3[] _polygonVertices;   // 凹多角形の頂点リスト
 
     public Transform targetObject;  // 判定したいオブジェクトの位置
     [SerializeField] private RandomPositionGenerater rpg;
@@ -15,7 +15,25 @@ public class PolygonInsideChecker : MonoBehaviour
     void Update()
     {
         // Debug.Log("");
-        Vector2[] polygon2D = ProjectTo2D(polygonVertices);
+        
+
+        // bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
+        // Debug.Log("対象オブジェクトは多角形の内部か: " + isInside);
+
+        // 各辺を描画
+        for (int i = 0; i < _polygonVertices.Length; i++)
+        {
+            Vector3 startPoint = _polygonVertices[i];
+            Vector3 endPoint = _polygonVertices[(i + 1) % _polygonVertices.Length]; // 最後の辺を閉じる
+            Debug.DrawLine(startPoint, endPoint, Color.green);
+        }
+    }
+
+    public void ModifyPolygon(Vector3[] polVer)
+    {
+        _polygonVertices = polVer;
+
+        Vector2[] polygon2D = ProjectTo2D(_polygonVertices);
         // Vector2 targetPosition2D = new Vector2(targetObject.position.x, targetObject.position.z);
         if (rpg.Zombies != null)
         {
@@ -26,37 +44,23 @@ public class PolygonInsideChecker : MonoBehaviour
                 if (isInside)
                 {
                     rpg.Zombies[i].IsDefeat = true;
-                    rpg.Zombies.RemoveAt(i);
+                    rpg.Zombies[i] = null;
+                    // rpg.Zombies.RemoveAt(i);
                 }
             }
+            rpg.Zombies.RemoveAll(item => item == null);
         }
-
-        // bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
-        // Debug.Log("対象オブジェクトは多角形の内部か: " + isInside);
-
-        // 各辺を描画
-        for (int i = 0; i < polygonVertices.Length; i++)
-        {
-            Vector3 startPoint = polygonVertices[i];
-            Vector3 endPoint = polygonVertices[(i + 1) % polygonVertices.Length]; // 最後の辺を閉じる
-            Debug.DrawLine(startPoint, endPoint, Color.green);
-        }
-    }
-
-    public void ModifyPolygon(Vector3[] polVer)
-    {
-        polygonVertices = polVer;
-        // Vector2[] polygon2D = ProjectTo2D(polygonVertices);
+        // Vector2[] polygon2D = ProjectTo2D(_polygonVertices);
         // Vector2 targetPosition2D = new Vector2(targetObject.position.x, targetObject.position.z);
 
         // bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
         // Debug.Log("対象オブジェクトは多角形の内部か: " + isInside);
 
         // // 各辺を描画
-        // for (int i = 0; i < polygonVertices.Length; i++)
+        // for (int i = 0; i < _polygonVertices.Length; i++)
         // {
-        //     Vector3 startPoint = polygonVertices[i];
-        //     Vector3 endPoint = polygonVertices[(i + 1) % polygonVertices.Length]; // 最後の辺を閉じる
+        //     Vector3 startPoint = _polygonVertices[i];
+        //     Vector3 endPoint = _polygonVertices[(i + 1) % _polygonVertices.Length]; // 最後の辺を閉じる
         //     Debug.DrawLine(startPoint, endPoint, Color.green);
         // }
     }

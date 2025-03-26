@@ -74,7 +74,6 @@ public class RandomPositionGenerater : MonoBehaviour
                         _zombies.Add(a.GetComponent<Zombie>());
                         // Debug.Log("生成！");
                     }
-                    
                 }
                 
             }
