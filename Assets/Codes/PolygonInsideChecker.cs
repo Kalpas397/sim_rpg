@@ -9,17 +9,11 @@ public class PolygonInsideChecker : MonoBehaviour
 {
     public Vector3[] _polygonVertices;   // 凹多角形の頂点リスト
 
-    public Transform targetObject;  // 判定したいオブジェクトの位置
-    [SerializeField] private RandomPositionGenerater rpg;
+    // public Transform targetObject;  // 判定したいオブジェクトの位置
+    [SerializeField] private RandomPositionGenerater _rpg;
 
     void Update()
     {
-        // Debug.Log("");
-        
-
-        // bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
-        // Debug.Log("対象オブジェクトは多角形の内部か: " + isInside);
-
         // 各辺を描画
         for (int i = 0; i < _polygonVertices.Length; i++)
         {
@@ -29,40 +23,34 @@ public class PolygonInsideChecker : MonoBehaviour
         }
     }
 
-    public void ModifyPolygon(Vector3[] polVer)
+    /// <summary>
+    /// PlayerDrawLine.csにて線が囲まれた際に呼び出される
+    /// </summary>
+    /// <param name="vertices">囲いを構成する頂点の配列</param>
+    public void ModifyPolygon(Vector3[] vertices)
     {
-        _polygonVertices = polVer;
+        // 生成する凹多角形の形を更新
+        _polygonVertices = vertices;
 
         Vector2[] polygon2D = ProjectTo2D(_polygonVertices);
-        // Vector2 targetPosition2D = new Vector2(targetObject.position.x, targetObject.position.z);
-        if (rpg.Zombies != null)
+
+        if (_rpg.Zombies != null)
         {
-            for (int i = 0; i < rpg.Zombies.Count; i++)
+            // フィールドに存在する全てのゾンビが囲いの内側にいるか判定
+            for (int i = 0; i < _rpg.Zombies.Count; i++)
             {
-                Vector2 targetPosition2D = new Vector2(rpg.Zombies[i].gameObject.transform.position.x, rpg.Zombies[i].gameObject.transform.position.z);
+                Vector2 targetPosition2D = new Vector2(_rpg.Zombies[i].gameObject.transform.position.x, _rpg.Zombies[i].gameObject.transform.position.z);
                 bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
                 if (isInside)
                 {
-                    rpg.Zombies[i].IsDefeat = true;
-                    rpg.Zombies[i] = null;
-                    // rpg.Zombies.RemoveAt(i);
+                    // 内側にいたゾンビを倒す
+                    _rpg.Zombies[i].IsDefeat = true;
+                    _rpg.Zombies[i] = null;
                 }
             }
-            rpg.Zombies.RemoveAll(item => item == null);
+            // nullの要素をリストから削除
+            _rpg.Zombies.RemoveAll(item => item == null);
         }
-        // Vector2[] polygon2D = ProjectTo2D(_polygonVertices);
-        // Vector2 targetPosition2D = new Vector2(targetObject.position.x, targetObject.position.z);
-
-        // bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
-        // Debug.Log("対象オブジェクトは多角形の内部か: " + isInside);
-
-        // // 各辺を描画
-        // for (int i = 0; i < _polygonVertices.Length; i++)
-        // {
-        //     Vector3 startPoint = _polygonVertices[i];
-        //     Vector3 endPoint = _polygonVertices[(i + 1) % _polygonVertices.Length]; // 最後の辺を閉じる
-        //     Debug.DrawLine(startPoint, endPoint, Color.green);
-        // }
     }
 
     // Vector3配列をXZ平面に投影（2D化）

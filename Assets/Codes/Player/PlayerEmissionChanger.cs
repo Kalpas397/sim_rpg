@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// プレイヤーの無敵時の明滅表現
+/// </summary>
 public class PlayerEmissionChanger : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
