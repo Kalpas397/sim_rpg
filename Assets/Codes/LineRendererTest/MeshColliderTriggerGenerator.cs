@@ -1,34 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PolygonCollider2D))]
 public class MeshColliderTriggerGenerator : MonoBehaviour
 {
-    [Header("ポリゴンの頂点リスト (2D座標 - X, Yのみ使用)")]
-    public List<Vector2> vertices = new List<Vector2>(); // 頂点リスト（インスペクタで設定）
-
-    private PolygonCollider2D polygonCollider;
+    public List<Vector3> vertices; // Vector3型の頂点リスト
 
     void Start()
     {
-        // PolygonCollider2Dコンポーネントを取得
-        polygonCollider = GetComponent<PolygonCollider2D>();
+        // メッシュを生成
+        Mesh mesh = new Mesh();
+        mesh.vertices = vertices.ToArray();
 
-        // 頂点リストを適用してポリゴンを生成
-        GeneratePolygonCollider();
-    }
-
-    void GeneratePolygonCollider()
-    {
-        if (vertices.Count < 3)
+        // 自動生成の三角形 (シンプルな例として調整が必要)
+        List<int> triangles = new List<int>();
+        for (int i = 0; i < vertices.Count - 2; i++)
         {
-            Debug.LogError("少なくとも3つの頂点が必要です！");
-            return;
+            triangles.Add(0);
+            triangles.Add(i + 1);
+            triangles.Add(i + 2);
         }
+        mesh.triangles = triangles.ToArray();
 
-        // PolygonCollider2Dのパスを設定
-        polygonCollider.SetPath(0, vertices.ToArray());
+        // メッシュオブジェクトの設定
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
 
-        Debug.Log("PolygonCollider2Dが生成されました！");
+        // MeshColliderに適用
+        MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
     }
 }
