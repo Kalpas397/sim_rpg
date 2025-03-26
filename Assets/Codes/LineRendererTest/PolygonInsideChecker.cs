@@ -10,14 +10,29 @@ public class PolygonInsideChecker : MonoBehaviour
     public Vector3[] polygonVertices;   // 凹多角形の頂点リスト
 
     public Transform targetObject;  // 判定したいオブジェクトの位置
+    [SerializeField] private RandomPositionGenerater rpg;
 
     void Update()
     {
+        // Debug.Log("");
         Vector2[] polygon2D = ProjectTo2D(polygonVertices);
-        Vector2 targetPosition2D = new Vector2(targetObject.position.x, targetObject.position.z);
+        // Vector2 targetPosition2D = new Vector2(targetObject.position.x, targetObject.position.z);
+        if (rpg.Zombies != null)
+        {
+            for (int i = 0; i < rpg.Zombies.Count; i++)
+            {
+                Vector2 targetPosition2D = new Vector2(rpg.Zombies[i].gameObject.transform.position.x, rpg.Zombies[i].gameObject.transform.position.z);
+                bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
+                if (isInside)
+                {
+                    rpg.Zombies[i].IsDefeat = true;
+                    rpg.Zombies.RemoveAt(i);
+                }
+            }
+        }
 
-        bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
-        Debug.Log("対象オブジェクトは多角形の内部か: " + isInside);
+        // bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
+        // Debug.Log("対象オブジェクトは多角形の内部か: " + isInside);
 
         // 各辺を描画
         for (int i = 0; i < polygonVertices.Length; i++)

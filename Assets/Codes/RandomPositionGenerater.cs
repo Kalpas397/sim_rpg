@@ -9,13 +9,17 @@ public class RandomPositionGenerater : MonoBehaviour
     [SerializeField] private Transform rangeB;
     [SerializeField] private float checkInterval = 3f;  // Groundにヒットした後の待機時間(秒)
 
-    [Header("RandomPosition Settings")]
+    [Header("Objects Settings")]
     [SerializeField] private GameObject _objFruit;
+    [SerializeField] private GameObject _objZombie;
+    [SerializeField] private List<Zombie> _zombies;
 
     [Header("SphereCast Settings")]
     [SerializeField] private float _sphereRadius = 0.5f; // 球の半径
     [SerializeField] private float _maxDistance = 10f;  // 最大距離
     private RaycastHit _hit;
+
+    public List<Zombie> Zombies { get => _zombies; set => _zombies = value; }
 
     void Start()
     {
@@ -44,14 +48,33 @@ public class RandomPositionGenerater : MonoBehaviour
             if (PerformSphereCast())
             {
                 // オブジェクト生成
-                if (_objFruit)
+                // if (_objFruit)
+                // {
+                //     Instantiate(_objFruit, new Vector3(
+                //         this.transform.position.x,
+                //         1f,
+                //         this.transform.position.z),
+                //         Quaternion.identity
+                //     );
+                // }
+
+                // ゾンビ生成
+                if (_objZombie)
                 {
-                    Instantiate(_objFruit, new Vector3(
-                        this.transform.position.x,
-                        1f,
-                        this.transform.position.z),
-                        Quaternion.identity
-                    );
+                    if (_zombies.Count < 20)
+                    {
+                        GameObject a =
+                        Instantiate(_objZombie, new Vector3(
+                            this.transform.position.x,
+                            1f,
+                            this.transform.position.z),
+                            Quaternion.identity
+                        );
+
+                        _zombies.Add(a.GetComponent<Zombie>());
+                        // Debug.Log("生成！");
+                    }
+                    
                 }
                 
             }
