@@ -83,6 +83,7 @@ public class PlayerCollision : MonoBehaviour
         }
     }
 
+
     // 拾ったフルーツを積み上げる
     private void StackFruits(GameObject fruit)
     {
