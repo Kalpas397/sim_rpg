@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerDrawLine playerDrawLine;
 
     [SerializeField] private Transform saucer;  // 受け皿オブジェクト
     [SerializeField] private GameObject[] fruits;    // 拾ったフルーツを格納する配列
@@ -30,6 +31,8 @@ public class PlayerCollision : MonoBehaviour
         {
             if (isDamaged)
             {
+                playerDrawLine.ResetLines();
+                playerDrawLine.IsCircleComplete = true;
                 DestroyFruits();    // フルーツ削除
                 StartCoroutine(playerController.DamagedPlayer(_collision));
             }

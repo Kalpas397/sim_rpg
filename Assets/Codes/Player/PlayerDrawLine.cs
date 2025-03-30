@@ -22,10 +22,11 @@ public class PlayerDrawLine : MonoBehaviour
     private bool _isUseSkill = false;   // スキルが使用されたか
     private bool _isCircleComplete = false; // 円が完成したか
 
+    public bool IsCircleComplete { get => _isCircleComplete; set => _isCircleComplete = value; }
 
     void Start()
     {
-        
+        IsCircleComplete = true;   
     }
 
     void Update()
@@ -34,17 +35,17 @@ public class PlayerDrawLine : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ResetLines();
-            _isCircleComplete = false;
+            IsCircleComplete = false;
         }
 
-        if (!_isCircleComplete)
+        if (!IsCircleComplete)
         {
 
         
-        // スキル使用中
-        // 直前の座標と差異があるか
-        DrawLine();
-        CheckLineTouch();
+            // スキル使用中
+            // 直前の座標と差異があるか
+            DrawLine();
+            CheckLineTouch();
         }
     }
 
@@ -103,7 +104,7 @@ public class PlayerDrawLine : MonoBehaviour
             if (closestVertexIndex < _lineRenderer.positionCount - 3)
             {
                 Debug.Log("ワッ！！！！");
-                _isCircleComplete = true;
+                IsCircleComplete = true;
 
                 List<Vector3> vertexPositions = GetVertexPositionsFromIndex(closestVertexIndex);
                 
@@ -138,7 +139,7 @@ public class PlayerDrawLine : MonoBehaviour
     /// <summary>
     /// 線のリセット
     /// </summary>
-    void ResetLines()
+    public void ResetLines()
     {
         // LineRendererのサイズを0にする
         _lineRenderer.positionCount = 0;

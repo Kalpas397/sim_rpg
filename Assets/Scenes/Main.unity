@@ -5757,6 +5757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1625490124}
+  playerDrawLine: {fileID: 1625490128}
   saucer: {fileID: 284894204}
   fruits: []
   maxFruitCount: 5
