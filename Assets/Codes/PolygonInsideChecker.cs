@@ -11,6 +11,7 @@ public class PolygonInsideChecker : MonoBehaviour
 
     // public Transform targetObject;  // 判定したいオブジェクトの位置
     [SerializeField] private RandomPositionGenerater _rpg;
+    [SerializeField] private GameManager _gm;
 
     void Update()
     {
@@ -43,9 +44,13 @@ public class PolygonInsideChecker : MonoBehaviour
                 bool isInside = IsPointInsidePolygon(targetPosition2D, polygon2D);
                 if (isInside)
                 {
-                    // 内側にいたゾンビを倒す
-                    _rpg.Zombies[i].IsDefeat = true;
-                    _rpg.Zombies[i] = null;
+                    if (!_gm.IsGameFinish)
+                    {
+                        // 内側にいたゾンビを倒す
+                        _rpg.Zombies[i].IsDefeat = true;
+                        _rpg.Zombies[i] = null;
+                        Statics.defeatEnemyNum += 1;
+                    }
                 }
             }
             // nullの要素をリストから削除
