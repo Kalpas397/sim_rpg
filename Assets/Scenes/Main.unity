@@ -632,7 +632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &65034141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -709,7 +709,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &83243780
 GameObject:
@@ -729,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &83243781
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -806,7 +806,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &85921082
 PrefabInstance:
@@ -1056,7 +1056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &98475070
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1133,7 +1133,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &159643108
 GameObject:
@@ -1153,7 +1153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &159643109
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1232,7 +1232,7 @@ Transform:
   m_Children:
   - {fileID: 2053018121881034777}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &194308349
 PrefabInstance:
@@ -4815,7 +4815,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1254596148
 GameObject:
@@ -4835,7 +4835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1254596149
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4912,7 +4912,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &1302900166
 PrefabInstance:
@@ -5877,6 +5877,7 @@ MonoBehaviour:
   _lineRenderer: {fileID: 1625490127}
   _touchThreshold: 10
   _polygonInsideChecker: {fileID: 1625490129}
+  _skillState: 0
 --- !u!114 &1625490129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5920,7 +5921,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1673032553
 PrefabInstance:
@@ -6828,7 +6829,7 @@ Transform:
   - {fileID: 1443406447}
   - {fileID: 999400849}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1849810857
 PrefabInstance:
@@ -7107,7 +7108,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1973201121
 MonoBehaviour:
@@ -7760,9 +7761,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruit
       objectReference: {fileID: 0}
+    - target: {fileID: 1574757933043904154, guid: 909a9a3dee3d0814d93fee2b52fabef4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1574757933043904158, guid: 909a9a3dee3d0814d93fee2b52fabef4, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1574757933043904158, guid: 909a9a3dee3d0814d93fee2b52fabef4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7858,6 +7863,10 @@ PrefabInstance:
     - target: {fileID: 4825267286496685481, guid: 398b340c361cc884ab3d285005f3d969, type: 3}
       propertyPath: m_Name
       value: Enemy_Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825267286496685481, guid: 398b340c361cc884ab3d285005f3d969, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4825267286496685493, guid: 398b340c361cc884ab3d285005f3d969, type: 3}
       propertyPath: m_RootOrder

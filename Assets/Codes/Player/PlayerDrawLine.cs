@@ -18,8 +18,18 @@ public class PlayerDrawLine : MonoBehaviour
 
     [Header("Player Action Settings")]
     private float _nowDrawTime = 0f;
-    private bool _canUseSkill = true; // スキルが使用可能か
-    private bool _isUseSkill = false;   // スキルが使用されたか
+    
+    private enum SkillState
+    {
+        Ban,    // 使用禁止
+        Ready,  // 使用可能
+        Using,  // 使用中
+        Cooldown    // 準備中
+    }
+
+    // スキルの状態
+    [SerializeField] private SkillState _skillState = SkillState.Ban;
+    
     private bool _isCircleComplete = false; // 円が完成したか
 
     public bool IsCircleComplete { get => _isCircleComplete; set => _isCircleComplete = value; }
