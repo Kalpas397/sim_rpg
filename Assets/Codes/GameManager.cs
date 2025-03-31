@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartCoroutine(guideText.AppearTextPropertiesOverTime("1", 0.5f, false));
         yield return new WaitForSeconds(1f);
-        StartCoroutine(guideText.AppearTextPropertiesOverTime("爆弾をゴールへ運ぼう", 3f, true));
+        StartCoroutine(guideText.AppearTextPropertiesOverTime("敵を線で囲って倒そう", 3f, true));
 
         timer.IsStopTimer = false;
     }
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // ノルマを達成できていない場合はゲームオーバー
-        StartCoroutine(guideText.AppearTextPropertiesOverTime("ラウンド終了", 3f, true));
+        StartCoroutine(guideText.AppearTextPropertiesOverTime("ゲームセット", 3f, true));
 
         timer.IsStopTimer = true;
     }

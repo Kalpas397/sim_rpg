@@ -12,8 +12,6 @@ public class PlayerDrawLine : MonoBehaviour
     [SerializeField] private float _touchThreshold = 10.0f; // 判定する距離の閾値 大きいほど各点の当たり判定がゆるくなる
     // プレイヤーの過去の座標
     // プレイヤーの座標の閾値
-    // [SerializeField] private GameObject colliderPrefab;
-    // [SerializeField] private LineEnclosedRange lineEnclosedRange;
     [SerializeField] private PolygonInsideChecker _polygonInsideChecker;
 
     [Header("Player Action Settings")]
@@ -36,7 +34,7 @@ public class PlayerDrawLine : MonoBehaviour
 
     void Start()
     {
-        IsCircleComplete = true;   
+        _isCircleComplete = true;   
     }
 
     void Update()
@@ -45,10 +43,10 @@ public class PlayerDrawLine : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ResetLines();
-            IsCircleComplete = false;
+            _isCircleComplete = false;
         }
 
-        if (!IsCircleComplete)
+        if (!_isCircleComplete)
         {
 
         
@@ -113,8 +111,15 @@ public class PlayerDrawLine : MonoBehaviour
             // 最新の頂点より以前の頂点に触れたか判定
             if (closestVertexIndex < _lineRenderer.positionCount - 3)
             {
+                // 描画されている線を結ぶ
+                _lineRenderer.positionCount += 1;
+                _lineRenderer.SetPosition(
+                    _lineRenderer.positionCount - 1,
+                    this.transform.position
+                    );
+
                 Debug.Log("ワッ！！！！");
-                IsCircleComplete = true;
+                _isCircleComplete = true;
 
                 List<Vector3> vertexPositions = GetVertexPositionsFromIndex(closestVertexIndex);
                 

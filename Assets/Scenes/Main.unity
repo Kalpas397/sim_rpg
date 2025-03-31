@@ -6016,7 +6016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114344768413473294, guid: 05f32eddd3e41fd4597ada617b785928, type: 3}
       propertyPath: m_ControlPath
-      value: <Keyboard>/space
+      value: <Gamepad>/buttonEast
       objectReference: {fileID: 0}
     - target: {fileID: 114826362001716654, guid: 05f32eddd3e41fd4597ada617b785928, type: 3}
       propertyPath: m_Type
@@ -7245,7 +7245,7 @@ GameObject:
   - component: {fileID: 1973201120}
   - component: {fileID: 1973201121}
   m_Layer: 0
-  m_Name: LayerChackerTest
+  m_Name: EnemyGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
