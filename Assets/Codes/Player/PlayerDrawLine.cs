@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerDrawLine : MonoBehaviour
 {
+    [SerializeField] private PlayerController playerController;
+
     [Header("LineRenderer Settings")]
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private float _touchThreshold = 10.0f; // 判定する距離の閾値 大きいほど各点の当たり判定がゆるくなる
@@ -39,8 +41,10 @@ public class PlayerDrawLine : MonoBehaviour
 
     void Update()
     {
+        
         // test 線のリセット
-        if (Input.GetKeyDown(KeyCode.Space))
+        // if (Input.GetKeyDown(KeyCode.Space))
+        if (playerController.Fire >= 1f)
         {
             ResetLines();
             _isCircleComplete = false;

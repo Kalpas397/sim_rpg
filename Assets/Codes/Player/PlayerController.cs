@@ -12,12 +12,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float minSpeed = 3.0f;
     private Rigidbody rb;
     private Vector2 move;
+    private float fire;
     [SerializeField] private Animator anim;
     [SerializeField] private bool isInvincible = false; // 無敵フラグ
     [SerializeField] private bool isNotControl = false; // 操作不可フラグ
 
     public bool IsInvincible { get => isInvincible; set => isInvincible = value; }
     public bool IsNotControl { get => isNotControl; set => isNotControl = value; }
+    public float Fire { get => fire; set => fire = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         // InputSystemから上下左右の操作を受け取る
         move = _inputActions.Player.Move.ReadValue<Vector2>();
+        fire = _inputActions.Player.Fire.ReadValue<float>();
 
         // マップ外落下から復帰
         if (transform.position.y < -10.0f)
